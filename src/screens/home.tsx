@@ -16,15 +16,15 @@ export default function HomeScreen() {
     navigation.setOptions({
       headerTitle: () => (
         <View className="flex-row">
-          <FontAwesome5 name="calendar-alt" size={24} color="#1d4ed8" />
-          <Text className="ml-2 text-3xl font-bold text-blue-700">med</Text>
+          <FontAwesome5 name="calendar-alt" size={24} color="#2563eb" />
+          <Text className="ml-2 text-3xl font-bold text-blue-600">med</Text>
           <Text className="text-3xl font-bold text-red-600">club</Text>
           <Text className="font-bold">®</Text>
         </View>
       ),
       headerTitleAlign: 'left',
       headerRight: () => (
-        <TouchableOpacity className="h-10 flex-row items-center justify-center rounded bg-blue-700 p-2">
+        <TouchableOpacity className="h-10 flex-row items-center justify-center rounded bg-blue-600 p-2">
           <Entypo name="plus" size={18} color="white" />
           <Text className="text-xl font-bold text-white">Agendar Consulta</Text>
         </TouchableOpacity>
@@ -34,8 +34,8 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1">
-      <ScrollView className="flex-1 bg-[#F5F5F5]">
-        <View className="m-4 flex-1 ">
+      <ScrollView className="flex-1 bg-slate-50">
+        <View className="m-4 flex-1 mb-10">
           <View className="">
             <Text className="text-3xl font-black text-slate-800">
               Suas Consultas
@@ -44,10 +44,10 @@ export default function HomeScreen() {
               Clique em uma consulta para ver detalhes ou fazer alterações
             </Text>
           </View>
-          <View className="flex-row flex-wrap justify-around">
+          <View className="mt-5 flex-row flex-wrap justify-around gap-2">
             {consultation.length > 0 ? (
               consultation.map((data) => {
-                return <CardServices doctor={data.doctor} key={data.id} />;
+                return <CardServices id={data.id} doctor={data.doctor} key={data.id} date={data.date} localization={data.localization} specialty={data.specialty}/>;
               })
             ) : (
               <View className="flex items-center justify-center">
