@@ -4,6 +4,9 @@ module.exports = {
 
   presets: [require('nativewind/preset')],
   theme: {
+    fontFamily: {
+      sans: ["OpenSans400"],
+    },
     extend: {},
   },
   plugins: [],
