@@ -34,7 +34,7 @@ export function CardServices({ doctor, date, localization, specialty }: Consulta
       </View>
       <View className="flex items-start gap-2">
         <View className="flex-row items-center gap-2">
-          <FontAwesome6 name="user-doctor" size={16} color="#475569" />{' '}
+          <FontAwesome6 name="user-doctor" size={16} color="#475569" />
           <Text className="text-xl font-semibold text-slate-800">Dr. {doctor}</Text>
         </View>
         <View className="flex-row items-center gap-2">

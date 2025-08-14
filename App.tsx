@@ -1,10 +1,31 @@
 import './global.css';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import HomeScreen from './src/screens/home';
-import { NavigationContainer } from '@react-navigation/native';
+import ConsultationScreen from './src/screens/consultation';
+
+import { View, Text, TouchableOpacity } from 'react-native';
+import { FontAwesome5, Entypo } from '@expo/vector-icons';
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from './src/types/rootStackParamList';
 import { useFonts } from 'expo-font';
+
 const Stack = createNativeStackNavigator();
+
+function HeaderRightButton() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Consultation')}
+      style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, backgroundColor: '#2563eb', padding: 8 }}
+    >
+      <Entypo name="plus" size={18} color="white" />
+      <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white', marginLeft: 4 }}>Agendar Consulta</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,8 +41,22 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Navigator
+          screenOptions={{
+            headerTitle: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FontAwesome5 name="calendar-alt" size={24} color="#2563eb" />
+                <Text style={{ marginLeft: 8, fontSize: 24, fontWeight: 'bold', color: '#2563eb' }}>med</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#dc2626' }}>club</Text>
+                <Text style={{ fontWeight: 'bold' }}>®</Text>
+              </View>
+            ),
+            headerTitleAlign: 'left',
+            headerRight: () => <HeaderRightButton />,
+          }}
+        >
+          <Stack.Screen name="Home" component={HomeScreen}  />
+          <Stack.Screen name="Consultation" component={ConsultationScreen} options={{ headerBackVisible: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
