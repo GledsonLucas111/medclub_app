@@ -9,9 +9,9 @@ type Props = TextInputProps & {
 export function Input({  textStyle, icon, ...rest }: Props) {
 
     return(
-        <View className="flex gap-2 flex-row items-center bg-white rounded-lg shadow-lg shadow-[#4d4d4d]">
+        <View className="flex gap-2 flex-row items-center rounded-lg border border-slate-200 bg-white shadow">
             {icon && <View className="ml-4">{icon}</View>}
-            <TextInput {...rest} className={`py-5 text-lg bg-white ${textStyle}`}/>
+            <TextInput {...rest} className={`px-4 text-lg bg-white ${textStyle}`}/>
         </View>
     )
 }

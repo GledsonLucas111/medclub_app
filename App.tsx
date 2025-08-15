@@ -5,25 +5,26 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/home';
 import ConsultationScreen from './src/screens/consultation';
 
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { useNavigation, NavigationContainer } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './src/types/rootStackParamList';
 import { useFonts } from 'expo-font';
+import { Button } from '@/components/button';
 
 const Stack = createNativeStackNavigator();
 
 function HeaderRightButton() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
-    <TouchableOpacity
+    <Button
       onPress={() => navigation.navigate('Consultation')}
-      style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, backgroundColor: '#2563eb', padding: 8 }}
-    >
-      <Entypo name="plus" size={18} color="white" />
-      <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white', marginLeft: 4 }}>Agendar Consulta</Text>
-    </TouchableOpacity>
+      title="Agendar Consulta"
+      textStyle='text-white text-lg font-semibold ml-2'
+      icon={<Entypo name="plus" size={18} color="white" />}
+      buttonStyle='bg-blue-600 px-4 py-2 rounded'
+    />
   );
 }
 
@@ -37,7 +38,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -46,17 +47,22 @@ export default function App() {
             headerTitle: () => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome5 name="calendar-alt" size={24} color="#2563eb" />
-                <Text style={{ marginLeft: 8, fontSize: 24, fontWeight: 'bold', color: '#2563eb' }}>med</Text>
+                <Text style={{ marginLeft: 8, fontSize: 24, fontWeight: 'bold', color: '#2563eb' }}>
+                  med
+                </Text>
                 <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#dc2626' }}>club</Text>
                 <Text style={{ fontWeight: 'bold' }}>®</Text>
               </View>
             ),
             headerTitleAlign: 'left',
             headerRight: () => <HeaderRightButton />,
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen}  />
-          <Stack.Screen name="Consultation" component={ConsultationScreen} options={{ headerBackVisible: false }}/>
+          }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="Consultation"
+            component={ConsultationScreen}
+            options={{ headerBackVisible: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

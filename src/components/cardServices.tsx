@@ -3,6 +3,7 @@ import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { FontAwesome5, Fontisto, EvilIcons, FontAwesome6, AntDesign } from '@expo/vector-icons';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { Button } from './button';
 
 export function CardServices({ doctor, date, localization, specialty }: ConsultationType) {
   const formatDate = (date: string) => {
@@ -47,15 +48,16 @@ export function CardServices({ doctor, date, localization, specialty }: Consulta
         </View>
       </View>
       <View className="flex-row justify-between">
-        <TouchableOpacity className="w-10/12 items-center rounded bg-blue-600 px-4 py-2 ">
-          <View className="flex-row items-center justify-center gap-2">
-            <FontAwesome6 name="eye" size={16} color="white" />
-            <Text className="text-lg text-white">Ver Detalhes</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity className="flex justify-center rounded border border-red-200 bg-red-100 p-2 ">
-          <AntDesign name="delete" size={20} color="red" />
-        </TouchableOpacity>
+        <Button
+          title="Ver Detalhes"
+          textStyle="text-white text-lg font-semibold ml-2"
+          icon={<FontAwesome6 name="eye" size={16} color="white" />}
+          buttonStyle="rounded bg-blue-600 px-4 w-10/12"
+        />
+        <Button
+          icon={<AntDesign name="delete" size={20} color="red" />}
+          buttonStyle="flex justify-center items-center rounded border border-red-200 bg-red-100 p-2"
+        />
       </View>
     </View>
   );

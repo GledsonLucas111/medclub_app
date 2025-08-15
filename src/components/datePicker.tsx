@@ -3,8 +3,11 @@ import { View, Text, TouchableOpacity, Modal, ScrollView, Dimensions } from 'rea
 import { Feather } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
+interface DatePickerProps {
+  onChangeDate: (date: Date | null) => void;
+}
 
-export default function CustomDatePickerPTBR() {
+export default function CustomDatePickerPTBR({ onChangeDate }: DatePickerProps) {
   const [date, setDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
   const [selectedDay, setSelectedDay] = useState(date.getDate());
@@ -49,8 +52,8 @@ export default function CustomDatePickerPTBR() {
     const newDate = new Date(selectedYear, selectedMonth, selectedDay);
     setDate(newDate);
     setShowModal(false);
+    onChangeDate(newDate); 
   };
-
   const cancelDate = () => {
     setShowModal(false);
   };
@@ -137,14 +140,12 @@ export default function CustomDatePickerPTBR() {
   };
 
   const generateDays = () => {
-    const realMonth = selectedYear === today.getFullYear() ? today.getMonth() + getMonthIndex() : selectedMonth;
+    const realMonth =
+      selectedYear === today.getFullYear() ? today.getMonth() + getMonthIndex() : selectedMonth;
     const daysInMonth = getDaysInMonth(realMonth, selectedYear);
     const days = [];
     let startDay = 1;
-    if (
-      selectedYear === today.getFullYear() &&
-      realMonth === today.getMonth()
-    ) {
+    if (selectedYear === today.getFullYear() && realMonth === today.getMonth()) {
       startDay = today.getDate();
     }
     for (let day = startDay; day <= daysInMonth; day++) {
@@ -158,8 +159,7 @@ export default function CustomDatePickerPTBR() {
       <TouchableOpacity
         onPress={openModal}
         activeOpacity={0.8}
-        className="flex-row items-center bg-white rounded-lg px-4 py-3 mb-5 shadow border border-slate-200"
-      >
+        className="mb-5 flex-row items-center rounded-lg border border-slate-200 bg-white px-4 py-3 shadow">
         <Text className="ml-3 flex-1 text-lg text-slate-800">{formatDateToPtBR(date)}</Text>
         <Feather name="calendar" size={22} color="#1e293b" />
       </TouchableOpacity>
@@ -171,13 +171,18 @@ export default function CustomDatePickerPTBR() {
             </Text>
             <View className="h-52 flex-row">
               {renderPicker(generateDays(), selectedDay, setSelectedDay, 'Dia')}
-              {renderPicker(generateMonths(), getMonthIndex(), (idx) => {
-                if (selectedYear === today.getFullYear()) {
-                  setSelectedMonth(today.getMonth() + idx);
-                } else {
-                  setSelectedMonth(idx);
-                }
-              }, 'Mês')}
+              {renderPicker(
+                generateMonths(),
+                getMonthIndex(),
+                (idx) => {
+                  if (selectedYear === today.getFullYear()) {
+                    setSelectedMonth(today.getMonth() + idx);
+                  } else {
+                    setSelectedMonth(idx);
+                  }
+                },
+                'Mês'
+              )}
               {renderPicker(generateYears(), selectedYear, setSelectedYear, 'Ano')}
             </View>
             <View className="mt-5 flex-row justify-around">

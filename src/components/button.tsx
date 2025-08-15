@@ -1,8 +1,8 @@
-import { Text, Pressable, PressableProps, View } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { ReactNode } from 'react';
 
-type Props = PressableProps & {
-  title: string;
+type Props = TouchableOpacityProps & {
+  title?: string;
   textStyle?: string;
   buttonStyle?: string;
   icon?: ReactNode;
@@ -11,9 +11,9 @@ type Props = PressableProps & {
 
 export function Button({ title, textStyle, buttonStyle, icon, disabledButton, ...rest }: Props) {
   return (
-    <Pressable {...rest} disabled={disabledButton} className={`${buttonStyle} flex-row items-center justify-center`}>
-      {icon && <View className="mr-2">{icon}</View>}
-      <Text className={`${textStyle}`}>{title}</Text>
-    </Pressable>
+    <TouchableOpacity activeOpacity={0.8} {...rest} disabled={disabledButton} className={`${buttonStyle} flex-row items-center justify-center`}>
+      {icon && <View>{icon}</View>}
+      {title && <Text className={`${textStyle}`}>{title}</Text>}
+    </TouchableOpacity>
   );
 }
