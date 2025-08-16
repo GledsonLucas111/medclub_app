@@ -35,7 +35,6 @@ export default function ConsultationScreen() {
       localization: localization?.address ?? '',
     })
   }
-  // console.log(localization?.address);
   const handleSave = () => {
     if (dateSelected && timeSelected && selected && localization) {
       submitForm();

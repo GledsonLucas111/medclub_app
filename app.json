@@ -1,11 +1,8 @@
 {
   "expo": {
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "medclub",
+    "slug": "medclub",
     "version": "1.0.0",
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "experiments": {
       "tsconfigPaths": true
     },

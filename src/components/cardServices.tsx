@@ -1,6 +1,6 @@
 import { ConsultationType } from '@/types/data';
 import { Text, View } from 'react-native';
-import { FontAwesome5, Fontisto, EvilIcons, FontAwesome6, Feather } from '@expo/vector-icons';
+import { FontAwesome5, Fontisto, AntDesign, FontAwesome6, Feather } from '@expo/vector-icons';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from './button';
@@ -30,8 +30,8 @@ export function CardServices({ doctor, date, localization, specialty, hour, onPr
             <Text className="text-xl font-bold leading-tight text-slate-800">
               {formatDate(date)}
             </Text>
-            <View className="flex-row items-center">
-              <EvilIcons name="clock" size={20} color="#475569" />
+            <View className="flex-row items-center gap-2">
+              <AntDesign name="clockcircleo" size={18} color="#475569" />
               <Text className="text-lg text-slate-600">{hour}:00</Text>
             </View>
           </View>

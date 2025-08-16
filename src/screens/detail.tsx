@@ -4,15 +4,19 @@ import {
   AntDesign,
   Feather,
   FontAwesome5,
-  EvilIcons,
   FontAwesome6,
   FontAwesome,
 } from '@expo/vector-icons';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useState } from 'react';
+import { useConsultation } from '@/context/ConsultationContext';
+import CustomAlert from '@/components/customAlert';
 
 export default function DetailScreen({ route, navigation }: any) {
   const { data } = route.params;
+  const [alertVisible, setAlertVisible] = useState(false);
+  const { deleteConsultation } = useConsultation();
 
   const formatDate = (date: string | Date) => {
     try {
@@ -21,6 +25,20 @@ export default function DetailScreen({ route, navigation }: any) {
     } catch {
       return typeof date === 'string' ? date : date.toString();
     }
+  };
+
+  const handleDeletePress = () => {
+    setAlertVisible(true);
+  };
+
+  const handleCancel = () => {
+    setAlertVisible(false);
+  };
+
+  const handleConfirm = () => {
+    deleteConsultation(data.id);
+    navigation.goBack();
+    setAlertVisible(false);
   };
 
   return (
@@ -56,7 +74,7 @@ export default function DetailScreen({ route, navigation }: any) {
               </View>
               <View className="flex-row items-center gap-4">
                 <View className="rounded-lg bg-blue-200 p-3">
-                  <EvilIcons name="clock" size={20} color="#2563eb" />
+                  <AntDesign name="clockcircleo" size={20} color="#2563eb" />
                 </View>
                 <View>
                   <Text className="text-lg text-slate-600">HORÁRIO</Text>
@@ -109,7 +127,7 @@ export default function DetailScreen({ route, navigation }: any) {
           <View className="flex">
             <Text className="border-t-[1px] border-slate-200"></Text>
             <Button
-              onPress={() => console.log('Delete consultation')}
+              onPress={handleDeletePress}
               icon={<Feather name="trash-2" size={18} color="red" />}
               title="Excluir consulta"
               buttonStyle="w-full rounded py-3 border border-red-400"
@@ -118,6 +136,14 @@ export default function DetailScreen({ route, navigation }: any) {
           </View>
         </View>
       </ScrollView>
+      <CustomAlert
+        title="Confirmar Exclusão"
+        message="Tem certeza que deseja excluir esta consulta? Esta ação não pode ser desfeita."
+        titleButtonConfirm="Excluir Consulta"
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+        visible={alertVisible}
+      />
     </SafeAreaView>
   );
 }
