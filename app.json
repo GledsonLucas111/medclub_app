@@ -27,6 +27,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.gledsonlucas111.medclub"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e311c693-b2cd-4e9f-8bda-bccb0c10e792"
       }
     }
   }

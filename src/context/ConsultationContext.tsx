@@ -16,7 +16,7 @@ const ConsultationContext = createContext<ConsultationContextType>({
 });
 
 export const ConsultationProvider: React.FC<React.PropsWithChildren<object>> = ({ children }) => {
-  const [consultation, setConsultation] = useState<ConsultationType[]>([{id: 1, doctor: 'Dr. Smith', specialty: 'Cardiology', date: new Date(), hour: 9, localization: 'Room 101'}]);
+  const [consultation, setConsultation] = useState<ConsultationType[]>([]);
 
   const addConsultation = (novaConsulta: ConsultationType) => {
     setConsultation([...consultation, { ...novaConsulta }]);
