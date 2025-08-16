@@ -8,11 +8,11 @@ interface DatePickerProps {
 }
 
 export default function CustomDatePickerPTBR({ onChangeDate }: DatePickerProps) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<Date | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(date.getDate());
-  const [selectedMonth, setSelectedMonth] = useState(date.getMonth());
-  const [selectedYear, setSelectedYear] = useState(date.getFullYear());
+  const [selectedDay, setSelectedDay] = useState(date?.getDate() || 1);
+  const [selectedMonth, setSelectedMonth] = useState(date?.getMonth() || 0);
+  const [selectedYear, setSelectedYear] = useState(date?.getFullYear() || new Date().getFullYear());
 
   const months = [
     'Janeiro',
@@ -42,9 +42,11 @@ export default function CustomDatePickerPTBR({ onChangeDate }: DatePickerProps) 
   };
 
   const openModal = () => {
-    setSelectedDay(date.getDate());
-    setSelectedMonth(date.getMonth());
-    setSelectedYear(date.getFullYear());
+    if (date) {
+      setSelectedDay(date.getDate());
+      setSelectedMonth(date.getMonth());
+      setSelectedYear(date.getFullYear());
+    }
     setShowModal(true);
   };
 
@@ -54,6 +56,7 @@ export default function CustomDatePickerPTBR({ onChangeDate }: DatePickerProps) 
     setShowModal(false);
     onChangeDate(newDate); 
   };
+
   const cancelDate = () => {
     setShowModal(false);
   };
@@ -160,7 +163,9 @@ export default function CustomDatePickerPTBR({ onChangeDate }: DatePickerProps) 
         onPress={openModal}
         activeOpacity={0.8}
         className="mb-5 flex-row items-center rounded-lg border border-slate-200 bg-white px-4 py-3 shadow">
-        <Text className="ml-3 flex-1 text-lg text-slate-800">{formatDateToPtBR(date)}</Text>
+        <Text className="ml-3 flex-1 text-lg text-slate-800">
+          {date ? formatDateToPtBR(date) : 'Selecione uma data'}
+        </Text>
         <Feather name="calendar" size={22} color="#1e293b" />
       </TouchableOpacity>
       <Modal visible={showModal} transparent animationType="slide">

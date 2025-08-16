@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './src/screens/home';
 import ConsultationScreen from './src/screens/consultation';
+import DetailScreen from './src/screens/detail';
 
 import { View, Text } from 'react-native';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
@@ -14,7 +15,9 @@ import { useFonts } from 'expo-font';
 import { Button } from '@/components/button';
 import { ConsultationProvider } from '@/context/ConsultationContext';
 
+
 const Stack = createNativeStackNavigator();
+
 
 function HeaderRightButton() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -64,6 +67,11 @@ export default function App() {
             <Stack.Screen
               name="Consultation"
               component={ConsultationScreen}
+              options={{ headerBackVisible: false }}
+            />
+            <Stack.Screen
+              name="Detail"
+              component={DetailScreen}
               options={{ headerBackVisible: false }}
             />
           </Stack.Navigator>

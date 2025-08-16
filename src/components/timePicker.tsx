@@ -9,7 +9,7 @@ type TimePickerProps = {
 
 export default function TimePicker({ selectedDate, onChangeTime }: TimePickerProps) {
   const now = new Date();
-  const [hour, setHour] = useState(now.getHours());
+  const [hour, setHour] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
 
   const date = selectedDate || now;
@@ -23,13 +23,16 @@ export default function TimePicker({ selectedDate, onChangeTime }: TimePickerPro
   };
 
   const openModal = () => {
+    if (hour === null) {
+      setHour(hours[0]);
+    }
     setShowModal(true);
   };
 
   const confirmTime = () => {
     setShowModal(false);
-    if (onChangeTime) {
-      onChangeTime({ hour }); 
+    if (onChangeTime && hour !== null) {
+      onChangeTime({ hour });
     }
   };
 
@@ -60,7 +63,7 @@ export default function TimePicker({ selectedDate, onChangeTime }: TimePickerPro
                 onPress={() => onValueChange(item)}>
                 <Text
                   className={`text-base ${isSelected ? 'font-semibold text-white' : 'text-slate-800'}`}>
-                  {item.toString().padStart(2, '0')}
+                  {item.toString().padStart(2, '0')}:00
                 </Text>
               </TouchableOpacity>
             );
@@ -69,14 +72,16 @@ export default function TimePicker({ selectedDate, onChangeTime }: TimePickerPro
       </View>
     );
   };
-
+  
   return (
     <View className="flex-1">
       <TouchableOpacity
         onPress={openModal}
         activeOpacity={0.8}
         className="mb-5 flex-row items-center rounded-lg border border-slate-200 bg-white px-4 py-3 shadow">
-        <Text className="ml-3 flex-1 text-lg text-slate-800">{formatTime(hour)}</Text>
+        <Text className="ml-3 flex-1 text-lg text-slate-800">
+          {hour === null ? 'selecione uma hora' : `${formatTime(hour)}:00`}
+        </Text>
         <Feather name="clock" size={22} color="#1e293b" />
       </TouchableOpacity>
       <Modal visible={showModal} transparent animationType="slide">
@@ -85,7 +90,7 @@ export default function TimePicker({ selectedDate, onChangeTime }: TimePickerPro
             <Text className="mb-5 text-center text-lg font-bold text-slate-800">
               Selecionar Horário
             </Text>
-            <View className="h-52 flex-row">{renderPicker(hours, hour, setHour, 'Hora')}</View>
+            <View className="h-52 flex-row">{renderPicker(hours, hour ?? hours[0], setHour, 'Hora')}</View>
             <View className="mt-5 flex-row justify-around">
               <TouchableOpacity
                 onPress={cancelTime}

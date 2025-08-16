@@ -2,7 +2,8 @@ export type ConsultationType = {
   id: number;
   doctor: string;
   specialty: string;
-  date: string;
+  date: string | Date;
+  hour: number;
   localization: string;
 };
 

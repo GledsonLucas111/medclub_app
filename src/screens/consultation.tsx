@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { AntDesign, FontAwesome5, FontAwesome6, Feather  } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -14,6 +14,7 @@ import { Input } from '@/components/input';
 
 import { doctors, localizationData } from '@/constants/data';
 import { Doctor } from '@/types/data';
+import { useConsultation } from '@/context/ConsultationContext';
 
 export default function ConsultationScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -21,7 +22,28 @@ export default function ConsultationScreen() {
   const [timeSelected, setTimeSelected] = useState<{ hour: number } | null>(null);
   const [selected, setSelected] = useState<Doctor | null>(null);
   const specialty = selected ? selected?.specialty : 'Selecione um médico';
-  const [localization, setLocalization] = useState<string | null>(null);
+  const [localization, setLocalization] = useState<{id: string, address: string} | null>(null);
+  const {addConsultation} = useConsultation();
+
+  const submitForm = () => {
+    addConsultation({
+      id: Date.now(),
+      doctor: selected?.name ?? '',
+      specialty: specialty,
+      date: dateSelected ?? '',
+      hour: timeSelected?.hour ?? 0,
+      localization: localization?.address ?? '',
+    })
+  }
+  // console.log(localization?.address);
+  const handleSave = () => {
+    if (dateSelected && timeSelected && selected && localization) {
+      submitForm();
+      navigation.goBack();
+    } else {
+      Alert.alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -98,6 +120,7 @@ export default function ConsultationScreen() {
                 buttonStyle="w-full rounded py-3 border border-slate-400"
               />
               <Button
+                onPress={handleSave}
                 icon={<Feather name="save" size={20} color="white" />}
                 title="Agendar Consulta"
                 buttonStyle="w-full rounded py-3 bg-blue-600"
